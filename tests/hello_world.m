@@ -1,2 +1,2 @@
 % print hello world
-disp('Hello, World!');
+disp('Running all tests...');
