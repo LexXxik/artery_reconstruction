@@ -27,5 +27,5 @@ if isempty(fileInfo) || fileInfo.bytes <= 0
 	return;
 end
 
-fprintf('PASS: plot_swc created image.');
+disp('PASS: plot_swc created image.');
 end

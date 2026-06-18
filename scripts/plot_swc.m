@@ -23,10 +23,7 @@ if isempty(ext)
     outputFilename = [outputFilename, '.png'];
 end
 
-ids = round(data(:,1));
-coords = data(:,3:5);
-radii = data(:,6);
-parents = round(data(:,7));
+[ids, coords, radii, parents] = decompose_network(data);
 
 midX = median(coords(:,1));
 midY = median(coords(:,2));
