@@ -9,13 +9,9 @@ if nargin < 1 || isempty(filename)
 	error('Usage: data = read_swc(filename)');
 end
 
-candidates = {filename, fullfile('my_pipeline','data','raw',filename), fullfile('data','raw',filename), fullfile(fileparts(mfilename('fullpath')),'..','data','raw',filename)};
 found = '';
-for k = 1:numel(candidates)
-	if isfile(candidates{k})
-		found = candidates{k};
-		break;
-	end
+if isfile(filename)
+	found = filename;
 end
 
 if isempty(found)
