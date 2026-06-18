@@ -1,0 +1,5 @@
+# Ignore all files inside the data/raw directory
+data/raw/*
+
+# Exception: Do NOT ignore the specific BG001.CNG.swc file
+!data/raw/BG001.CNG.swc
