@@ -13,7 +13,7 @@ function create_bifurcation_segment_test()
     
     % Test cases
     test_cases = [
-        struct('target_id', 11, 'forward', false, 'expected', [11; 6; 3]),   % Bifurcation segment for target_id 11
+        struct('target_id', 11, 'forward', false, 'expected', [3; 6; 11]),   % Bifurcation segment for target_id 11
         struct('target_id', 12, 'forward', true, 'expected', [12; 18; 19; 20]),   % Bifurcation segment for target_id 12
         struct('target_id', 13, 'forward', true, 'expected', [13; 14])    % Bifurcation segment for target_id 13
     ];

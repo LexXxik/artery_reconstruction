@@ -24,6 +24,8 @@ function bifurcation_segment = create_bifurcation_segment(target_id, ids, parent
             current_id = parent_id;
         end
     end
-    
+    if ~forward
+        bifurcation_segment = flipud(bifurcation_segment); % Reverse the order for upward traversal
+    end
 
 end

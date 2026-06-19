@@ -4,28 +4,29 @@
 % id_d1 is the main continuation of the branch and id_d2 is the side branch
 % the logic distinguishinng main and side branch is contained in a function is_side_branch
 
-%NOT FINSIHED
-function bifurcation = select_bifurcation(apex_id, ids, coords, radii, parents)
-    % Find the parent of the apex node
-    id_parent = parents(ids == apex_id);
+% use create bifurcation segment to get the 4 nodes leading up to apex and the 4 nodes leading down from apex in each daughter branch
+function bifurcation = select_bifurcation(apex_id, ids, radii, parents)
+    % Get the 4 nodes leading up to the apex
+    bifurcation_up = create_bifurcation_segment(apex_id, ids, parents, false);
     
-    % Find the children of the apex node
-    child_ids = ids(parents == apex_id);
+    % Get the daughters of the apex
+    daughter_ids = find_daughters(apex_id, ids, parents);
     
-    % Initialize bifurcation structure
-    bifurcation = struct('id_parent', id_parent, 'id_d1', [], 'id_d2', []);
-    
-    % Check if there are at least two children
-    if length(child_ids) < 2
-        error('Apex node must have at least two children to form a bifurcation.');
-    end
-    
-    % Determine which child is the main continuation and which is the side branch
-    if is_side_branch(child_ids(1), ids, parents)
-        bifurcation.id_d1 = child_ids(2);
-        bifurcation.id_d2 = child_ids(1);
+    % Determine which daughter is the side branch and which is the main branch
+    if is_side_branch(daughter_ids(1), ids, parents, radii)
+        id_d1 = daughter_ids(2); % Main branch
+        id_d2 = daughter_ids(1); % Side branch
     else
-        bifurcation.id_d1 = child_ids(1);
-        bifurcation.id_d2 = child_ids(2);
+        id_d1 = daughter_ids(1); % Main branch
+        id_d2 = daughter_ids(2); % Side branch
     end
+    
+    % Get the 4 nodes leading down from each daughter branch
+    bifurcation_down_d1 = create_bifurcation_segment(id_d1, ids, parents, true);
+    bifurcation_down_d2 = create_bifurcation_segment(id_d2, ids, parents, true);
+    
+    % Combine all parts of the bifurcation into a single structure
+    bifurcation.id_p = bifurcation_up;
+    bifurcation.id_d1 = bifurcation_down_d1;
+    bifurcation.id_d2 = bifurcation_down_d2;
 end

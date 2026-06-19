@@ -7,5 +7,6 @@ find_apexes_test();
 find_daughters_test();
 is_side_branch_test();
 create_bifurcation_segment_test();
+select_bifurcation_test();
 plot_swc_test(rawDataDir);
 plot_apexes_test(rawDataDir);
