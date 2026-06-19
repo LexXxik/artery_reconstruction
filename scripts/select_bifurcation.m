@@ -29,4 +29,5 @@ function bifurcation = select_bifurcation(apex_id, ids, radii, parents)
     bifurcation.id_p = bifurcation_up;
     bifurcation.id_d1 = bifurcation_down_d1;
     bifurcation.id_d2 = bifurcation_down_d2;
+    bifurcation.apex_id = apex_id; % Store the apex id for reference
 end
