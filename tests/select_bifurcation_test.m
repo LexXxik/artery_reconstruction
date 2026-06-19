@@ -14,8 +14,8 @@ function select_bifurcation_test()
     % Test cases
     apex_id = 11; % Apex node
     expected_output.id_p = [3; 6; 11];
-    expected_output.id_d1 = [12; 18; 19; 20]; % Main branch
-    expected_output.id_d2 = [13; 14]; % Side branch
+    expected_output.id_d1 = [11; 12; 18; 19; 20]; % Main branch
+    expected_output.id_d2 = [11; 13; 14]; % Side branch
 
     % Call the function
     output = select_bifurcation(apex_id, ids, radii, parents);

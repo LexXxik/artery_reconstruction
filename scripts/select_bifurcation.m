@@ -27,7 +27,7 @@ function bifurcation = select_bifurcation(apex_id, ids, radii, parents)
     
     % Combine all parts of the bifurcation into a single structure
     bifurcation.id_p = bifurcation_up;
-    bifurcation.id_d1 = bifurcation_down_d1;
-    bifurcation.id_d2 = bifurcation_down_d2;
+    bifurcation.id_d1 = [apex_id; bifurcation_down_d1];
+    bifurcation.id_d2 = [apex_id; bifurcation_down_d2];
     bifurcation.apex_id = apex_id; % Store the apex id for reference
 end

@@ -61,9 +61,6 @@ if highlightBif
     ids_d1  = bifurcation.id_d1;
     ids_d2  = bifurcation.id_d2;
     apex_id = bifurcation.apex_id;
-
-    ids_d1 = [apex_id; ids_d1(:)];  % Ensure apex is included in main daughter
-    ids_d2 = [apex_id; ids_d2(:)];  % Ensure apex is included in side daughter
 else
     ids_p = []; ids_d1 = []; ids_d2 = []; apex_id = [];
 end
