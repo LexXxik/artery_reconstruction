@@ -1,12 +1,12 @@
 % Make a test function for is_side_branch
 function is_side_branch_test()
     % Sample data for testing
+    %
     %           5
     %         /
     %       2 - 10
     %     /
     %   1 - 3 - 6
-    %
     %
     ids = [1; 2; 3; 10; 5; 6];
     parents = [-1; 1; 1; 2; 2; 3]; % Node 1 is the root, nodes 2 and 3 are children of node 1, etc.
