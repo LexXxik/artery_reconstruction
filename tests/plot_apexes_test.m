@@ -6,7 +6,9 @@ function plot_apexes_test(dataDir)
     % Act
     data_file = fullfile(dataDir, 'BG0014.CNG.swc');
     data = read_swc(data_file);
-    output_Path = plot_apexes(data, outName);
+    [ids, coords, radii, parents] = decompose_network(data);
+    apex_ids = find_apexes(ids, parents);
+    output_Path = plot_apexes(ids, coords, radii, parents, apex_ids, outName);
     
     % Assert
     assert(isfile(output_Path), 'Figure was not saved in the expected location.');

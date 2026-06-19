@@ -8,11 +8,15 @@ data = read_swc(data_file);
 apex_ids = find_apexes(ids, parents);
 fprintf('Apex IDs: %s\n', mat2str(apex_ids));
 
-my_bifurcation = select_bifurcation(3860, ids, radii, parents);
+
+% 3380 finished prematurely as it encounters another bifurcation
+% 3860 a pretty good to showcase
+my_bifurcation = select_bifurcation(3021, ids, radii, parents);
 
 % print my_bifurcation to the console
 disp('Bifurcation structure:');
 disp(my_bifurcation);
 
 plot_bifurcation_raw(my_bifurcation, radii, coords, ids, parents, 'BG0014_bifurcation_raw.png', true);
-plot_swc(ids, coords, radii, parents, 'BG0014_plot.png');
+%plot_swc(ids, coords, radii, parents, 'BG0014_plot.png');
+%plot_apexes(ids, coords, radii, parents, apex_ids, 'BG0014_apexes.png');

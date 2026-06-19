@@ -1,7 +1,5 @@
 % Make a function that plots apexes on the neuron structure. The function should take in the ids, coords, radii, parents, and apex_ids as inputs and plot the neuron structure with apexes highlighted.
-function outputFile = plot_apexes(data, outputFilename)
-    [ids, coords, radii, parents] = decompose_network(data);
-    apex_ids = find_apexes(ids, parents);
+function outputFile = plot_apexes(ids, coords, radii, parents, apex_ids, outputFilename)
     
     % Create a new figure
     figure;
@@ -40,5 +38,4 @@ function outputFile = plot_apexes(data, outputFilename)
 
     outputFile = fullfile(outputDir, outputFilename);
     saveas(gcf, outputFile);
-    close(gcf);
 end
