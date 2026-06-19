@@ -15,3 +15,4 @@ disp('Bifurcation structure:');
 disp(my_bifurcation);
 
 plot_bifurcation_raw(my_bifurcation, radii, coords, ids);
+plot_swc(data, 'BG0014_plot.png', my_bifurcation);

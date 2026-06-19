@@ -38,7 +38,9 @@ function plot_bifurcation_raw(bifurcation, radii, coords, ids, branch_colors)
         'EdgeColor', 'none', 'DisplayName', 'Main daughter');
     h_d2 = patch(nan, nan, nan, 'FaceColor', branch_colors.side_daughter, ...
         'EdgeColor', 'none', 'DisplayName', 'Side daughter');
-    legend([h_parent, h_d1, h_d2]);
+    h_apex = scatter3(nan, nan, nan, 100, [1 1 0], 'filled', ...
+        'MarkerEdgeColor', 'k', 'DisplayName', sprintf('Apex (id=%d)', apex_id));
+    legend([h_parent, h_d1, h_d2, h_apex]);
 
     hold off;
 end
