@@ -14,12 +14,10 @@ function find_apexes_test()
         10, 3;
     ];
     
-    expected_apex_ids = [1, 2, 3]; % Nodes with two or more children
+    expected_apex_ids = [1; 2; 3]; % Nodes with two or more children
     
     % Act
-    apex_ids = find_apexes(sample_nodes);
-    disp('Apex IDs found:');
-    disp(apex_ids);
+    apex_ids = find_apexes(sample_nodes(:, 1), sample_nodes(:, 2));
     
     % Assert
     assert(isequal(sort(apex_ids), sort(expected_apex_ids)), 'Apex IDs do not match expected values.');

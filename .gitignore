@@ -3,3 +3,6 @@ data/raw/*
 
 # Exception: Do NOT ignore the specific BG001.CNG.swc file
 !data/raw/BG001.CNG.swc
+
+# Ignore all the results produced 
+results/visualization/*
