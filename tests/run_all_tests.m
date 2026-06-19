@@ -1,8 +1,10 @@
+startup;
 rawDataDir = fullfile(projectRoot, 'data', 'raw');
 hello_world();
 read_swc_test(rawDataDir);
 decompose_network_test();
 find_apexes_test();
 find_daughters_test();
+is_side_branch_test();
 plot_swc_test(rawDataDir);
 plot_apexes_test(rawDataDir);
