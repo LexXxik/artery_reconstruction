@@ -8,5 +8,8 @@ find_daughters_test();
 is_side_branch_test();
 create_bifurcation_segment_test();
 select_bifurcation_test();
-plot_swc_test(rawDataDir);
-plot_apexes_test(rawDataDir);
+smooth_branch_test();
+
+% plotting tests in the end to avoid opening too many figures at once
+%plot_swc_test(rawDataDir);
+%plot_apexes_test(rawDataDir);

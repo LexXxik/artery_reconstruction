@@ -6,13 +6,10 @@ data = read_swc(data_file);
 [ids, coords, radii, parents] = decompose_network(data);
 % Identify bifurcations (apexes) in the neuron structure
 apex_ids = find_apexes(ids, parents);
-fprintf('Apex IDs: %s\n', mat2str(apex_ids));
-fprintf('There are %d bifurcations in the neuron structure.\n', length(apex_ids));
-
 
 % 3380 finished prematurely as it encounters another bifurcation
-% 3860 a pretty good to showcase
+% 3021 a pretty good to showcase
 my_bifurcation = select_bifurcation(3021, ids, radii, parents);
 
-plot_swc(ids, coords, radii, parents, 'BG0014_plot.png');
-plot_apexes(ids, coords, radii, parents, apex_ids, 'BG0014_apexes.png');
+plot_bifurcation_raw(my_bifurcation, radii, coords, ids, parents, 'BG0014_bifurcation_raw.png', true);
+plot_bifurcation_smooth(my_bifurcation, radii, coords, ids, 'BG0014_bifurcation_smooth.png');

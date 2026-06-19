@@ -15,6 +15,9 @@ function [smoothed_coords, smoothed_radii] = smooth_branch(coords, radii, num_ou
     %   smoothed_radii - num_out x 1 vector of interpolated radii
     
     % Create parameter vectors for original and interpolated points
+
+    n = size(coords, 1);
+    t = linspace(0, 1, n);
     t_fine = linspace(0, 1, num_out);
     
     % PCHIP prevents numerical "overshoot" and maintains C2 continuity
