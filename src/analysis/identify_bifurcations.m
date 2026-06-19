@@ -14,5 +14,5 @@ my_bifurcation = select_bifurcation(3860, ids, radii, parents);
 disp('Bifurcation structure:');
 disp(my_bifurcation);
 
-plot_bifurcation_raw(my_bifurcation, radii, coords, ids);
-plot_swc(data, 'BG0014_plot.png', my_bifurcation);
+plot_bifurcation_raw(my_bifurcation, radii, coords, ids, parents, 'BG0014_bifurcation_raw.png', true);
+plot_swc(ids, coords, radii, parents, 'BG0014_plot.png');

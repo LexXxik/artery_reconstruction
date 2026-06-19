@@ -12,9 +12,10 @@ if ~isfile(rawFile)
 end
 
 data = read_swc(rawFile);
+[ids, coords, radii, parents] = decompose_network(data);
 
 outName = ['BG001_plot_test_', datestr(now, 'yyyymmdd'), '.png'];
-outPath = plot_swc(data, outName);
+outPath = plot_swc(ids, coords, radii, parents, outName);
 
 if ~isfile(outPath)
 	fprintf('FAIL: plot_swc did not create output image: %s\n', outPath);

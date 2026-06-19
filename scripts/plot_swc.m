@@ -1,28 +1,33 @@
-function outputFile = plot_swc(data, outputFilename, bifurcation)
+function outputFile = plot_swc(ids, coords, radii, parents, outputFilename, bifurcation, zoomBif)
 % PLOT_SWC Visualize SWC morphology as an interactive 3D plot and save it.
-%   outputFile = PLOT_SWC(data)
-%   outputFile = PLOT_SWC(data, outputFilename)
-%   outputFile = PLOT_SWC(data, outputFilename, bifurcation)
+%   outputFile = PLOT_SWC(ids, coords, radii, parents)
+%   outputFile = PLOT_SWC(ids, coords, radii, parents, outputFilename)
+%   outputFile = PLOT_SWC(ids, coords, radii, parents, outputFilename, bifurcation)
+%   outputFile = PLOT_SWC(ids, coords, radii, parents, outputFilename, bifurcation, zoomBif)
 %
 % Input:
-%   data           N-by-7 matrix [id, type, x, y, z, radius, parent]
+%   ids            Vector of node IDs
+%   coords         N-by-3 matrix of node coordinates [x, y, z]
+%   radii          Vector of node radii
+%   parents        Vector of parent node IDs
 %   outputFilename Optional output image name (e.g., 'BG001_plot.png')
 %   bifurcation    Optional struct from select_bifurcation with fields:
 %                    id_p   : parent branch node IDs
 %                    id_d1  : main daughter branch node IDs
 %                    id_d2  : side daughter branch node IDs
 %                    apex_id: apex node ID
-%                  When provided, highlights parent and daughter branches
-%                  and annotates the apex node with its apex_id.
+%                  When provided, highlights parent and daughter branches.
+%   zoomBif        Optional logical scalar (default false).
+%                  If true and bifurcation is provided, zooms to bifurcation.
 %
 % Output:
 %   outputFile     Absolute path to generated image
 
-if nargin < 1 || isempty(data) || size(data, 2) ~= 7
-    error('plot_swc:InvalidInput', 'Input data must be a non-empty N-by-7 matrix.');
+if nargin < 4 || isempty(ids) || isempty(coords) || isempty(radii) || isempty(parents)
+    error('plot_swc:InvalidInput', 'Input data must be non-empty vectors/matrices.');
 end
 
-if nargin < 2 || isempty(outputFilename)
+if nargin < 5 || isempty(outputFilename)
     outputFilename = 'swc_plot.png';
 end
 
@@ -31,9 +36,15 @@ if isempty(ext)
     outputFilename = [outputFilename, '.png'];
 end
 
-highlightBif = nargin >= 3 && ~isempty(bifurcation);
+if nargin < 6
+    bifurcation = [];
+end
+highlightBif = ~isempty(bifurcation);
 
-[ids, coords, radii, parents] = decompose_network(data);
+if nargin < 7 || isempty(zoomBif)
+    zoomBif = false;
+end
+
 
 midX = median(coords(:,1));
 midY = median(coords(:,2));
@@ -80,7 +91,7 @@ hRP = plot3(NaN, NaN, NaN, '-', 'Color', c_RP, 'LineWidth', 1.5);
 hLP = plot3(NaN, NaN, NaN, '-', 'Color', c_LP, 'LineWidth', 1.5);
 
 % Draw all edges.
-for i = 1:size(data, 1)
+for i = 1:numel(ids)
     p_id = parents(i);
     if p_id <= 0 || ~isKey(idMap, p_id)
         continue;
@@ -112,7 +123,7 @@ for i = 1:size(data, 1)
 end
 
 % Background node cloud.
-markerSize = max(6, min(60, radii * 10));
+markerSize = max(6, min(60, radii * 20));
 scatter3(coords(:,1), coords(:,2), coords(:,3), markerSize, [0.2 0.2 0.2], 'filled', ...
     'MarkerFaceAlpha', 0.35, 'MarkerEdgeAlpha', 0.35);
 
@@ -163,29 +174,31 @@ if highlightBif
          sprintf('Apex (id=%d)', apex_id)}, ...
         'Location', 'northeastoutside');
 
-    % Zoom onto the bifurcation region
-    all_bif_ids = [ids_p; ids_d1; ids_d2];
-    bif_indices = [];
-    for bid = 1:numel(all_bif_ids)
-        if isKey(idMap, all_bif_ids(bid))
-            bif_indices = [bif_indices; idMap(all_bif_ids(bid))];
+    if zoomBif
+        % Zoom onto the bifurcation region
+        all_bif_ids = [ids_p; ids_d1; ids_d2];
+        bif_indices = [];
+        for bid = 1:numel(all_bif_ids)
+            if isKey(idMap, all_bif_ids(bid))
+                bif_indices = [bif_indices; idMap(all_bif_ids(bid))];
+            end
         end
-    end
-    
-    if ~isempty(bif_indices)
-        bif_coords = coords(bif_indices, :);
-        x_min = min(bif_coords(:,1)); x_max = max(bif_coords(:,1));
-        y_min = min(bif_coords(:,2)); y_max = max(bif_coords(:,2));
-        z_min = min(bif_coords(:,3)); z_max = max(bif_coords(:,3));
-        
-        % Add 20% padding
-        x_pad = 0.2 * (x_max - x_min); if x_pad == 0, x_pad = 1; end
-        y_pad = 0.2 * (y_max - y_min); if y_pad == 0, y_pad = 1; end
-        z_pad = 0.2 * (z_max - z_min); if z_pad == 0, z_pad = 1; end
-        
-        xlim([x_min - x_pad, x_max + x_pad]);
-        ylim([y_min - y_pad, y_max + y_pad]);
-        zlim([z_min - z_pad, z_max + z_pad]);
+
+        if ~isempty(bif_indices)
+            bif_coords = coords(bif_indices, :);
+            x_min = min(bif_coords(:,1)); x_max = max(bif_coords(:,1));
+            y_min = min(bif_coords(:,2)); y_max = max(bif_coords(:,2));
+            z_min = min(bif_coords(:,3)); z_max = max(bif_coords(:,3));
+
+            % Add 20% padding
+            x_pad = 0.2 * (x_max - x_min); if x_pad == 0, x_pad = 1; end
+            y_pad = 0.2 * (y_max - y_min); if y_pad == 0, y_pad = 1; end
+            z_pad = 0.2 * (z_max - z_min); if z_pad == 0, z_pad = 1; end
+
+            xlim([x_min - x_pad, x_max + x_pad]);
+            ylim([y_min - y_pad, y_max + y_pad]);
+            zlim([z_min - z_pad, z_max + z_pad]);
+        end
     end
 else
     legend([hRA, hLA, hRP, hLP], ...
