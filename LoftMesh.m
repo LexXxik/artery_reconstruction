@@ -22,6 +22,8 @@ fprintf('--- SMOOTHING RESULTS ---\n');
 fprintf('Branch 1: Min R = %.4f, Max R = %.4f\n', min(smooth1(:,4)), max(smooth1(:,4)));
 fprintf('Branch 2: Min R = %.4f, Max R = %.4f\n', min(smooth2(:,4)), max(smooth2(:,4)));
 fprintf('Smoothed data written to %s\n', output_filename);
+
+
 % PAPER FUNCTION
 function smoothed = runPenalizedSpline(segment)
 X_raw = segment(:, 1);
@@ -58,6 +60,8 @@ N_fine*Pz, ...
 exp(N_fine*Pr) ...
 ];
 end
+
+
 fprintf('Smoothed data written to %s\n', output_filename);
 %% BUILD GEOMETRY MODEL FROM SMOOTHED BRANCHES
 nTheta = 30; % points around each circular cross-section
@@ -89,6 +93,8 @@ TR = triangulation(F, V);
 stl_filename = 'vascular_model.stl';
 stlwrite(TR, stl_filename);
 fprintf('STL file written to %s\n', stl_filename);
+
+
 function [X,Y,Z] = tubeFromCenterline(branch, nTheta)
 % branch format: [X Y Z R]
 P = branch(:,1:3);
