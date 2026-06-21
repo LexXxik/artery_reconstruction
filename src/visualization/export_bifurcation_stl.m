@@ -11,7 +11,9 @@ data = read_swc(data_file);
 % Select bifurcation
 % 3380 finished prematurely as it encounters another bifurcation
 % 3860 a pretty good to showcase
-my_bifurcation = select_bifurcation(3860, ids, radii, parents);
+my_bifurcation = select_bifurcation(3021, ids, radii, parents);
 
+% Show the bifurcation in the brain
+plot_swc(ids, coords, radii, parents,"my_bifurcation.png", my_bifurcation, true);
 % Export to STL
 bifurcation_to_stl(my_bifurcation, radii, coords, ids, 'BG0014_bifurcation_3860.stl', true);
