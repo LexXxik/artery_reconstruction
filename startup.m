@@ -7,6 +7,6 @@ projectRoot = fileparts(mfilename('fullpath'));
 addpath(fullfile(projectRoot, 'scripts'));
 addpath(fullfile(projectRoot, 'tests'));
 addpath(fullfile(projectRoot, 'src')); 
-addpath(fullfile(projectRoot, 'src/analysis')); 
+addpath(fullfile(projectRoot, 'src/visualization')); 
 
 disp('Project paths successfully added!');

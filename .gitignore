@@ -6,3 +6,5 @@ data/raw/*
 
 # Ignore all the results produced 
 results/visualization/*
+
+results/stl_models/*
