@@ -23,7 +23,9 @@ function bifurcation_to_stl(bifurcation, radii, coords, ids, outputFilename, plo
     nTheta = 30; % cross-section resolution
 
     % --- Smooth and mesh each daughter branch ---
-    smooth_d1 = runPenalizedSpline_wrapper(bifurcation.id_d1, ids, coords, radii);
+    %smooth_d1 = runPenalizedSpline_wrapper(bifurcation.id_d1, ids, coords, radii);
+    % concatenate id_p and id_d1 to ensure smooth transition at the bifurcation point
+    smooth_d1 = runPenalizedSpline_wrapper([bifurcation.id_p; bifurcation.id_d1], ids, coords, radii);
     smooth_d2 = runPenalizedSpline_wrapper(bifurcation.id_d2, ids, coords, radii);
 
     [X1, Y1, Z1] = tubeFromCenterline(smooth_d1, nTheta);

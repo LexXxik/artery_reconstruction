@@ -26,8 +26,9 @@ function bifurcation = select_bifurcation(apex_id, ids, radii, parents)
     bifurcation_down_d2 = create_bifurcation_segment(id_d2, ids, parents, true);
     
     % Combine all parts of the bifurcation into a single structure
+    % daughter 1 is treated as a continuation of the parent branch, while daughter 2 is treated as a side branch
     bifurcation.id_p = bifurcation_up;
-    bifurcation.id_d1 = [apex_id; bifurcation_down_d1];
+    bifurcation.id_d1 = [bifurcation_down_d1];
     bifurcation.id_d2 = [apex_id; bifurcation_down_d2];
     bifurcation.apex_id = apex_id; % Store the apex id for reference
 end
