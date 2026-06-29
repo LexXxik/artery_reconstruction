@@ -135,7 +135,7 @@ if highlightBif
     hApex = plot3(NaN, NaN, NaN, 'o', 'Color', [1 1 0], 'MarkerFaceColor', [1 1 0], ...
         'MarkerSize', 10, 'MarkerEdgeColor', 'k', 'LineWidth', 1.5);
 
-    seg_list   = {ids_p,  ids_d1,  ids_d2};
+    seg_list   = {ids_p,  [apex_id; ids_d1],  [apex_id; ids_d2]};
     seg_colours = {c_P,   c_D1,    c_D2  };
     for s = 1:3
         seg = seg_list{s};
