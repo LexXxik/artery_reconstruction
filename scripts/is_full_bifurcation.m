@@ -1,0 +1,6 @@
+% Take bifurcation as input and return true if it is a full bifurcation (i.e. has 4 nodes leading up to the apex and 4 nodes leading down from each daughter branch)
+function isFull = is_full_bifurcation(bifurcation)
+    isFull = (numel(bifurcation.id_p) == 4) && ...
+             (numel(bifurcation.id_d1) == 4) && ...
+             (numel(bifurcation.id_d2) == 4);
+end

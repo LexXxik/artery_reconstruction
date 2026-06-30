@@ -8,7 +8,7 @@ data_file = fullfile(projectRoot, 'data', 'raw', 'BG0014.CNG.swc');
 % Good smoothing of bifurcation - 194
 % 64
 % 26
-bif_id = 3021; % The ID of the bifurcation to export
+bif_id = 64; % The ID of the bifurcation to export
 
 % Load and decompose
 data = read_swc(data_file);

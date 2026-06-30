@@ -8,5 +8,6 @@ addpath(fullfile(projectRoot, 'scripts'));
 addpath(fullfile(projectRoot, 'tests'));
 addpath(fullfile(projectRoot, 'src')); 
 addpath(fullfile(projectRoot, 'src/visualization')); 
+addpath(fullfile(projectRoot, 'src/data_processing')); 
 
 disp('Project paths successfully added!');
