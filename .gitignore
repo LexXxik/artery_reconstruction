@@ -12,3 +12,8 @@ results/visualization/*
 results/stl_models/*
 
 results/swc_to_process/*
+
+results/solidworks_models/*
+
+# Runtime hand-off file between MATLAB and the SOLIDWORKS macro
+scripts/solidworks/sw_thickness_params.txt

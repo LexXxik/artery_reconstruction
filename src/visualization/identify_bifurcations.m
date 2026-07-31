@@ -7,7 +7,7 @@ data = read_swc(data_file);
 % Identify bifurcations (apexes) in the neuron structure
 apex_ids = find_apexes(ids, parents);
 fprintf('Apex IDs: %s\n', mat2str(apex_ids));
-fprintf('There are %d bifurcations in the neuron structure.\n', length(apex_ids));
+fprintf('There are %d bifurcations in the network structure.\n', length(apex_ids));
 
 
 % 3380 finished prematurely as it encounters another bifurcation

@@ -8,6 +8,7 @@ addpath(fullfile(projectRoot, 'scripts'));
 addpath(fullfile(projectRoot, 'tests'));
 addpath(fullfile(projectRoot, 'src')); 
 addpath(fullfile(projectRoot, 'src/visualization')); 
-addpath(fullfile(projectRoot, 'src/data_processing')); 
+addpath(fullfile(projectRoot, 'src/data_processing'));
+addpath(fullfile(projectRoot, 'scripts/solidworks'));
 
 disp('Project paths successfully added!');
