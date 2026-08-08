@@ -1,19 +1,10 @@
 # Ignore all files inside the data/raw directory
 data/raw/*
 
-data/stl/*
-
 # Exception: Do NOT ignore the specific BG001.CNG.swc file
 !data/raw/BG001.CNG.swc
 
-# Ignore all the results produced 
+# Ignore all the results produced
 results/visualization/*
 
-results/stl_models/*
-
 results/swc_to_process/*
-
-results/solidworks_models/*
-
-# Runtime hand-off file between MATLAB and the SOLIDWORKS macro
-scripts/solidworks/sw_thickness_params.txt

@@ -1,5 +1,12 @@
+%%% Bifurcation extraction into swc for processing by vascularmd
 file_name = 'BG0014.CNG.swc';
 data_path = fullfile(projectRoot, 'data', 'raw', file_name);
+
+% Outer-wall inflation applied to every extracted bifurcation.
+% mode 'ratio'    -> outer = inner * (1 + inflation_amount)
+% mode 'absolute' -> outer = inner + inflation_amount
+inflation_amount = 0.1;
+inflation_mode = 'ratio';
 
 % find all apexes in the network
 [ids, coords, radii, parents] = decompose_network(read_swc(data_path));
@@ -34,17 +41,12 @@ for i = 1:numel(full_apexes)
     new_swc_file = bifurcation_to_swc(full_bifurcations(i), ids, radii, coords, parents, outputFilename, outputFolder);
     fprintf('Bifurcation SWC saved to %s\n', new_swc_file);
 
-    % Tag the inlet/outlet nodes of this bifurcation and save them as a
-    % JSON sidecar (bifurcation_%d.json) for later coordinate-based
-    % boundary matching in COMSOL.
-    tag_swc_endpoints_to_json(new_swc_file);
-
-    % Generate an outer-wall sibling SWC with the radius inflated by 10%
-    % of the local radius (ratio mode). Feed the original file into
-    % vascularmd for the lumen surface, and this one for the outer wall.
+    % Generate an outer-wall sibling SWC. Feed the original (inner
+    % radius) file into vascularmd for the lumen surface, and this one
+    % (outer radius) for the outer wall.
     [~, base_name] = fileparts(new_swc_file);
     outer_swc_file = fullfile(outputFolder, [base_name '_outer.swc']);
-    inflate_swc_radius(new_swc_file, outer_swc_file, 0.1, 'ratio');
+    inflate_swc_radius(new_swc_file, outer_swc_file, inflation_amount, inflation_mode);
     fprintf('Inflated outer-wall SWC saved to %s\n', outer_swc_file);
 end
 
