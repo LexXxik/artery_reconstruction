@@ -55,15 +55,71 @@ larger `automated_network` pipeline:
 
 ## Repository layout
 
-| Path | Purpose |
-|---|---|
-| `startup.m` | Adds `scripts/`, `tests/`, `src/`, `src/visualization/`, `src/data_processing/` to the MATLAB path. |
-| `scripts/` | Core reusable function library — parsing, topology, filtering, export, plotting. |
-| `src/data_processing/` | Batch driver script that reads a dataset, filters bifurcations, and exports inner/outer SWC pairs. |
-| `src/visualization/` | Demo scripts showing how to plot a dataset and its bifurcations/apexes. |
-| `tests/` | Unit tests (assert-based) plus `run_all_tests.m` runner. |
-| `data/raw/` | 62 input SWC vascular reconstructions. |
-| `results/` | Generated outputs: extracted bifurcation SWC pairs, visualization PNGs (gitignored). |
+```
+my_pipeline/
+├── startup.m                    # Adds scripts/, tests/, src/, src/visualization/,
+│                                 # src/data_processing/ to the MATLAB path.
+├── README.md                    # Top-level project readme.
+├── pre_processing_capability.md # This document.
+│
+├── scripts/                     # Core reusable function library: parsing, topology,
+│   │                             # filtering, export, plotting. Everything here is a
+│   │                             # pure/utility function, not a driver script.
+│   ├── read_swc.m                    # Parse an SWC file into an Nx7 matrix.
+│   ├── decompose_network.m           # Split the matrix into ids, coords, radii, parents.
+│   ├── is_apex.m                     # Test whether a node is a bifurcation.
+│   ├── find_apexes.m                 # Locate all bifurcation nodes in a network.
+│   ├── find_daughters.m              # Find child nodes of a given node.
+│   ├── is_side_branch.m              # Classify a daughter as the smaller-radius side branch.
+│   ├── create_bifurcation_segment.m  # Walk up to 3 nodes from a target, stop early at another apex.
+│   ├── select_bifurcation.m          # Build the {id_p, id_d1, id_d2, apex_id} struct for a bifurcation.
+│   ├── is_full_bifurcation.m         # Filter for bifurcations with complete (non-truncated) subgraphs.
+│   ├── bifurcation_to_swc.m          # Write an extracted bifurcation as a standalone inner-radius SWC file.
+│   ├── inflate_swc_radius.m          # Write an outer-wall sibling SWC (ratio or absolute inflation).
+│   ├── batch_inflate_swc.m           # Apply inflate_swc_radius to every SWC file in a folder.
+│   ├── plot_swc.m                    # Main 3D visualizer: quadrant coloring, bifurcation highlight/zoom.
+│   ├── plot_apexes.m                 # Plot a dataset with apex nodes highlighted.
+│   └── plot_bifurcation_raw.m        # Thin wrapper around plot_swc zoomed to a single bifurcation.
+│
+├── src/                          # Driver/demo scripts that call into scripts/.
+│   ├── data_processing/
+│   │   └── select_bifurcations_for_meshing.m  # Batch driver: load a dataset, filter to
+│   │                                            # full bifurcations, export inner/outer SWC pairs.
+│   ├── visualization/
+│   │   ├── identify_bifurcations.m       # Demo: plot a dataset with its apexes highlighted.
+│   │   └── show_example_bifurcations.m   # Demo: plot individual extracted bifurcations.
+│   └── analysis/                  # Currently empty — reserved for future analysis scripts.
+│
+├── tests/                        # Assert-based unit tests, one file per scripts/ function,
+│   │                               # plus a runner. No CI configuration is present.
+│   ├── run_all_tests.m                    # Test runner (plot_swc_test/plot_apexes_test are
+│   │                                        # commented out to avoid opening figure windows).
+│   ├── read_swc_test.m
+│   ├── decompose_network_test.m
+│   ├── find_apexes_test.m
+│   ├── find_daughters_test.m
+│   ├── is_side_branch_test.m
+│   ├── create_bifurcation_segment_test.m
+│   ├── select_bifurcation_test.m
+│   ├── is_full_bifurcation_test.m
+│   ├── bifurcation_to_swc_test.m
+│   ├── inflate_swc_radius_test.m
+│   ├── batch_inflate_swc_test.m
+│   ├── plot_swc_test.m             # Present but disabled in the runner.
+│   ├── plot_apexes_test.m          # Present but disabled in the runner.
+│   └── hello_world.m               # Trivial smoke-test script.
+│
+├── data/
+│   └── raw/                      # 62 input SWC vascular reconstructions
+│                                  # (NeuroMorpho-style, e.g. BG0014.CNG.swc).
+│
+└── results/                      # Generated outputs (gitignored).
+    ├── swc_to_process/
+    │   └── <dataset>/            # Per-dataset export folder, e.g. BG0014.CNG/ — one
+    │                              # <name>.swc + <name>_outer.swc pair (+ .json metadata)
+    │                              # per exported bifurcation.
+    └── visualization/            # PNG figures from plot_swc / plot_apexes / plot_bifurcation_raw.
+```
 
 ## Core library functions (`scripts/`)
 
