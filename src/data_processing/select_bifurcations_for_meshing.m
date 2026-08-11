@@ -1,5 +1,5 @@
 %%% Bifurcation extraction into swc for processing by vascularmd
-file_name = 'BG0014.CNG.swc';
+file_name = 'BG001.CNG.swc';
 data_path = fullfile(projectRoot, 'data', 'raw', file_name);
 
 % Outer-wall inflation applied to every extracted bifurcation.
